@@ -1,0 +1,47 @@
+services:
+    mysql:
+        image: "mysql:latest"
+        container_name: mysql
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: "${DB_DATABASE}"
+            MYSQL_USER: "${DB_USERNAME}"
+            MYSQL_PASSWORD: "${DB_PASSWORD}"
+            MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+        ports:
+            - "3306:3306"
+        volumes:
+            - "./.docker/mysql/data:/var/lib/mysql"
+
+    redis:
+        image: "redis:alpine"
+        container_name: redis
+        command: redis-server --appendonly yes
+        restart: unless-stopped
+        ports:
+            - "6379:6379"
+        volumes:
+            - "./.docker/redis/data:/data"
+
+    php:
+        build: ./.docker/php
+        container_name: php
+        restart: unless-stopped
+        ports:
+            - "9000:9000"
+        volumes:
+            - ".:/var/www"
+
+    nginx:
+        image: "nginx:alpine"
+        container_name: nginx
+        restart: unless-stopped
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ".:/var/www"
+            - "./.docker/nginx/conf.d:/etc/nginx/conf.d"
+            - "./.docker/certs:/etc/ssl/private"
+        depends_on:
+            - php
