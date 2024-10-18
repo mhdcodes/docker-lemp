@@ -12,8 +12,9 @@
   
 ```bash
 git clone git@github.com:the-dijkstra/docker-lemp.git
-cd docker_lemp
-docker-compose up
+cd docker-lemp
+cp .env.example .env
+docker-compose up -d
 ```
 
 ## 🔒 Setup SSL
@@ -28,6 +29,6 @@ mkcert -cert-file .docker/certs/server.crt -key-file .docker/certs/server.key ex
 
 ## ⛺ Using a virtual host
 
-- On your machine, run `$ sudo nano /etc/hosts` and add `127.0.0.1  example.localhost`
+- On your machine, run: `sudo nano /etc/hosts` and add `127.0.0.1  example.localhost`
 - Change the server name in `.docker/nginx/conf.d/default` to `example.localhost`
 - Run `docker-compose up` again
