@@ -32,6 +32,17 @@ services:
         volumes:
             - ".:/var/www"
 
+    composer:
+        image: "composer:latest"
+        container_name: composer
+        working_dir: "/var/www"
+        command: ["install", "--ignore-platform-reqs"]
+        tty: true
+        volumes:
+            - ".:/var/www"
+        depends_on:
+            - php
+
     nginx:
         image: "nginx:alpine"
         container_name: nginx
@@ -45,3 +56,5 @@ services:
             - "./.docker/certs:/etc/ssl/private"
         depends_on:
             - php
+            - mysql
+            - redis
