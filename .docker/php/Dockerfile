@@ -1,5 +1,8 @@
 FROM php:8.3-fpm-alpine
 
+ARG UID
+ARG GID
+
 # Optional, force UTC as server time
 RUN echo "UTC" > /etc/timezone
 

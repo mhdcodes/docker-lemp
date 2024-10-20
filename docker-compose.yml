@@ -24,7 +24,11 @@ services:
             - "./.docker/redis/data:/data"
 
     php:
-        build: ./.docker/php
+        build:
+            context: ./.docker/php
+            args:
+                - UID=${UID:-1000}
+                - GID=${GID:-1000}
         container_name: php
         restart: unless-stopped
         ports:
