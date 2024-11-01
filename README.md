@@ -11,7 +11,7 @@
 - Install and launch Docker  
   
 ```bash
-git clone git@github.com:the-dijkstra/docker-lemp.git
+git clone git@github.com:mhdcodes/docker-lemp.git
 cd docker-lemp
 cp .env.example .env
 docker-compose up -d
